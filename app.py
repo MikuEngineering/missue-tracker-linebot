@@ -39,8 +39,10 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_follow(event):
+    user_id = event.source.user_id
+
     # 發送回應
-    line_bot_api.reply_message(event.reply_token, TextSendMessage("早安！"))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(user_id))
 
 
 if __name__ == "__main__":
