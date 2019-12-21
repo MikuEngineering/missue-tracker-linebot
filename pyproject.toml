@@ -9,6 +9,8 @@ license = "MIT"
 python = "^3.6"
 flask = "^1.1"
 line-bot-sdk = "^1.15"
+flask-sqlalchemy = "^2.4"
+pymysql = "^0.9.3"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.4"
