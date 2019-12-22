@@ -73,7 +73,11 @@ def handle_follow(event):
         db.session.commit()
 
     # 發送回應
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(Token.decode(user.token)))
+    line_bot_api.reply_message(event.reply_token, [
+        TextSendMessage('Hi, I am Missue Tracker\'s LINE bot.'),
+        TextSendMessage(
+            f'To make you able to receive notifications, please fill the following token into your profile page: {Token.decode(user.token)}'),
+    ])
 
 
 if __name__ == "__main__":
