@@ -60,8 +60,16 @@ def handle_follow(event):
     user = User.find(user_id)
     if not user:
         token = ''
-        for _ in range(10):
-            token += random_emoji()
+        while True:
+            # 產生 token
+            for _ in range(10):
+                token += random_emoji()
+
+            # 沒有重複就使用
+            if not User.find_by_token(token):
+                break
+            else:
+                token = ''
 
         user = User(user_id=user_id, token=token)
         db.session.add(user)
