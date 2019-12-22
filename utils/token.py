@@ -16,7 +16,7 @@ class Token:
     def generate():
         token = ''
 
-        for _ in range(10):
+        for _ in range(6):
             token += random_emoji()
 
         return token
