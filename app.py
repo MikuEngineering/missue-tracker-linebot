@@ -6,6 +6,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from extensions.db import db
 from models.user import User
+from utils.random_emoji import random_emoji
 
 
 DB_HOSTNAME = os.getenv('LINE_BOT_DB_HOSTNAME', 'database')
@@ -16,7 +17,7 @@ LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}/{DB_DATABASE}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}/{DB_DATABASE}?charset=utf8mb4'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
@@ -58,7 +59,11 @@ def handle_follow(event):
 
     user = User.find(user_id)
     if not user:
-        user = User(user_id=user_id, token="哇")
+        token = ''
+        for _ in range(10):
+            token += random_emoji()
+
+        user = User(user_id=user_id, token=token)
         db.session.add(user)
         db.session.commit()
 
