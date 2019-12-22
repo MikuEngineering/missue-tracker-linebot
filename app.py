@@ -55,7 +55,7 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_follow(event):
+def handle_message(event):
     user_id = event.source.user_id
 
     user = User.find(user_id)
