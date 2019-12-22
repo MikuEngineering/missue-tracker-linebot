@@ -7,7 +7,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from extensions.db import db
 from models.user import User
-from utils.random_emoji import random_emoji
+from utils.token import Token
 
 
 DB_HOSTNAME = os.getenv('LINE_BOT_DB_HOSTNAME', 'database')
@@ -60,26 +60,20 @@ def handle_follow(event):
 
     user = User.find(user_id)
     if not user:
-        token = ''
         while True:
             # 產生 token
-            for _ in range(10):
-                token += random_emoji()
+            token = Token.generate()
 
             # 沒有重複就使用
-            if not User.find_by_token(User.find_by_token(base64.b64encode(bytes(token, 'utf8')))):
+            if not User.find_by_token(Token.encode(token)):
                 break
-            else:
-                token = ''
 
-        user = User(user_id=user_id,
-                    token=base64.b64encode(bytes(token, 'utf8')))
+        user = User(user_id=user_id, token=Token.encode(token))
         db.session.add(user)
         db.session.commit()
 
     # 發送回應
-    line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(str(base64.b64decode(user.token), 'utf8')))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(Token.decode(user.token)))
 
 
 if __name__ == "__main__":
