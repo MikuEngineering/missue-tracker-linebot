@@ -36,6 +36,18 @@ def root():
     return 'Hello Miku!'
 
 
+@app.route('/notify', methods=['POST'])
+def notify():
+    data = request.get_json(force=True)
+
+    user = User.find_by_token(Token.encode(data['token']))
+    if user:
+        line_bot_api.push_message(
+            user.user_id, TextSendMessage(data['message']))
+
+    return 'OK'
+
+
 @app.route('/callback', methods=['POST'])
 def callback():
     # get X-Line-Signature header value
