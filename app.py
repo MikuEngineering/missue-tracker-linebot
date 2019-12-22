@@ -1,3 +1,4 @@
+import base64
 import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -17,7 +18,7 @@ LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}/{DB_DATABASE}?charset=utf8mb4'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}/{DB_DATABASE}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
@@ -66,17 +67,19 @@ def handle_follow(event):
                 token += random_emoji()
 
             # 沒有重複就使用
-            if not User.find_by_token(token):
+            if not User.find_by_token(User.find_by_token(base64.b64encode(bytes(token, 'utf8')))):
                 break
             else:
                 token = ''
 
-        user = User(user_id=user_id, token=token)
+        user = User(user_id=user_id,
+                    token=base64.b64encode(bytes(token, 'utf8')))
         db.session.add(user)
         db.session.commit()
 
     # 發送回應
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(user.token))
+    line_bot_api.reply_message(
+        event.reply_token, TextSendMessage(str(base64.b64decode(user.token), 'utf8')))
 
 
 if __name__ == "__main__":
