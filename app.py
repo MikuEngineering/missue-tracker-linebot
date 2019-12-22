@@ -3,7 +3,7 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage
 
 from extensions.db import db
 from models.user import User
@@ -54,10 +54,23 @@ def callback():
     return 'OK'
 
 
+@handler.add(FollowEvent)
+def handle_follow(event):
+    user_id = event.source.user_id
+
+    # 發送回應
+    line_bot_api.reply_message(event.reply_token, get_welcome_message(user_id))
+
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     user_id = event.source.user_id
 
+    # 發送回應
+    line_bot_api.reply_message(event.reply_token, get_welcome_message(user_id))
+
+
+def get_welcome_message(user_id):
     user = User.find(user_id)
     if not user:
         while True:
@@ -72,12 +85,11 @@ def handle_message(event):
         db.session.add(user)
         db.session.commit()
 
-    # 發送回應
-    line_bot_api.reply_message(event.reply_token, [
+    return [
         TextSendMessage('Hi, I am Missue Tracker\'s LINE bot.'),
         TextSendMessage(
             f'To make you able to receive notifications, please fill the following token into your profile page: {Token.decode(user.token)}'),
-    ])
+    ]
 
 
 if __name__ == "__main__":
