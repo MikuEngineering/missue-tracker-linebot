@@ -95,6 +95,17 @@ version = "0.18.2"
 
 [[package]]
 category = "main"
+description = "WSGI HTTP Server for UNIX"
+name = "gunicorn"
+optional = false
+python-versions = ">=3.4"
+version = "20.0.4"
+
+[package.dependencies]
+setuptools = ">=3.0"
+
+[[package]]
+category = "main"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
@@ -266,7 +277,7 @@ python-versions = "*"
 version = "1.11.2"
 
 [metadata]
-content-hash = "38ab5ab4e80144639d7ba634f99b38febf099327972629a9875c52e4ae512ff5"
+content-hash = "48a69db7a2eb576cc9d798c49f950fc1fd7e6a0535907fafe249b3913ed6b7cc"
 python-versions = "^3.6"
 
 [metadata.hashes]
@@ -279,6 +290,7 @@ colorama = ["7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff", 
 flask = ["13f9f196f330c7c2c5d7a5cf91af894110ca0215ac051b5844701f2bfd934d52", "45eb5a6fd193d6cf7e0cf5d8a5b31f83d5faae0293695626f539a823e93b13f6"]
 flask-sqlalchemy = ["0078d8663330dc05a74bc72b3b6ddc441b9a744e2f56fe60af1a5bfc81334327", "6974785d913666587949f7c2946f7001e4fa2cb2d19f4e69ead02e4b8f50b33d"]
 future = ["b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"]
+gunicorn = ["1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626", "cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"]
 idna = ["c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407", "ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"]
 isort = ["54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1", "6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"]
 itsdangerous = ["321b033d07f2a4136d3ec762eac9f16a10ccd60f53c0c91af90217ace7ba1f19", "b12271b2047cb23eeb98c8b5622e2e5c5e9abd9784a153e9d8ef9cb4dd09d749"]

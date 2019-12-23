@@ -15,7 +15,7 @@ poetry install
 
 2. Set environment variables.
 ```bash
-export FLASK_RUN_PORT=3001
+export LINE_BOT_PORT=3001
 export LINE_BOT_DB_HOSTNAME=localhost
 export LINE_BOT_DB_DATABASE=missue_tracker_linebot
 export LINE_BOT_DB_USERNAME=miku
@@ -26,5 +26,5 @@ export LINE_CHANNEL_SECRET=xxxxxx
 
 3. Run!
 ```bash
-poetry run flask run
+poetry run gunicorn -b 127.0.0.1:$LINE_BOT_PORT -w 4 app:app
 ```
