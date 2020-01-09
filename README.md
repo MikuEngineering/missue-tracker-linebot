@@ -26,5 +26,5 @@ export LINE_CHANNEL_SECRET=xxxxxx
 
 3. Run!
 ```bash
-poetry run gunicorn -b 127.0.0.1:$LINE_BOT_PORT -w 4 app:app
+poetry run gunicorn -b 0.0.0.0:$LINE_BOT_PORT -w 4 app:app
 ```

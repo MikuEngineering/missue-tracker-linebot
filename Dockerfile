@@ -25,4 +25,4 @@ ENV LINE_BOT_PORT=$LINE_BOT_PORT \
 
 EXPOSE $LINE_BOT_PORT
 
-CMD /wait && $HOME/.poetry/bin/poetry run gunicorn -b 127.0.0.1:$LINE_BOT_PORT -w 4 app:app
+CMD /wait && $HOME/.poetry/bin/poetry run gunicorn -b 0.0.0.0:$LINE_BOT_PORT -w 4 app:app
