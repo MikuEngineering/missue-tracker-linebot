@@ -10,9 +10,9 @@ ARG LINE_BOT_DB_DATABASE=missue_tracker_linebot
 
 COPY . .
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+RUN pip install poetry
 
-RUN $HOME/.poetry/bin/poetry install
+RUN poetry install
 
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait /wait
 RUN chmod +x /wait
@@ -25,4 +25,4 @@ ENV LINE_BOT_PORT=$LINE_BOT_PORT \
 
 EXPOSE $LINE_BOT_PORT
 
-CMD /wait && $HOME/.poetry/bin/poetry run gunicorn -b 0.0.0.0:$LINE_BOT_PORT -w 4 app:app
+CMD /wait && poetry run gunicorn -b 0.0.0.0:$LINE_BOT_PORT -w 4 app:app
