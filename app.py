@@ -10,7 +10,7 @@ from models.user import User
 from utils.token import Token
 
 
-DB_HOSTNAME = os.getenv('LINE_BOT_DB_HOSTNAME', 'database')
+DB_HOST = os.getenv('LINE_BOT_DB_HOST', 'database')
 DB_DATABASE = os.getenv('LINE_BOT_DB_DATABASE', 'missue_tracker_linebot')
 DB_USERNAME = os.getenv('LINE_BOT_DB_USERNAME', 'miku')
 DB_PASSWORD = os.getenv('LINE_BOT_DB_PASSWORD', 'mtpassword')
@@ -18,7 +18,7 @@ LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}/{DB_DATABASE}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_DATABASE}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
