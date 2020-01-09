@@ -15,7 +15,7 @@ poetry install
 
 2. Set environment variables.
 ```bash
-export LINE_BOT_PORT=3001
+export LINE_BOT_PORT=8000
 export LINE_BOT_DB_HOST=localhost
 export LINE_BOT_DB_DATABASE=missue_tracker_linebot
 export LINE_BOT_DB_USERNAME=miku
